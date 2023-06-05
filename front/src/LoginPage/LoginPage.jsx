@@ -5,6 +5,7 @@ import LoginInput from "./LoginInput";
 import Logo from "./Logo";
 import { useDispatch } from "react-redux";
 import { setMyLocation } from "../MapPage/mapSlice";
+import { getRandomCoords } from "./FAKE_LOCATIONS";
 
 const isUserNameValid = (userName) => {
   return userName.length > 0 && userName.length < 10 && !userName.includes(" ");
@@ -36,11 +37,13 @@ const LoginPage = () => {
     setLocationErrorOccured(true);
   };
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition(
-      onSuccess,
-      onError,
-      locationOptions
-    );
+    // navigator.geolocation.getCurrentPosition(
+    //   onSuccess,
+    //   onError,
+    //   locationOptions
+    // );
+
+    onSuccess(getRandomCoords());
   }, []);
 
   const handleLogin = () => {
