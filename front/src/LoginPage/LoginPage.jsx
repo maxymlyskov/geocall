@@ -15,6 +15,7 @@ const locationOptions = {
 
 const LoginPage = () => {
   const [userName, setUserName] = useState("");
+  const [locationErrorOccured, setLocationErrorOccured] = useState(false);
   const navigate = useNavigate();
   const onSuccess = (position) => {
     console.log(position);
@@ -22,6 +23,7 @@ const LoginPage = () => {
 
   const onError = (error) => {
     console.log("error: " + error);
+    setLocationErrorOccured(true);
   };
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
@@ -41,7 +43,7 @@ const LoginPage = () => {
         <Logo />
         <LoginInput userName={userName} setUserName={setUserName} />
         <LoginButton
-          disabled={!isUserNameValid(userName)}
+          disabled={!isUserNameValid(userName) || locationErrorOccured}
           onClick={handleLogin}
         />
       </div>
