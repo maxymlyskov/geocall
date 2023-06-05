@@ -1,31 +1,12 @@
 import React, { useState } from "react";
-import "./LoginPage.css";
 import { useNavigate } from "react-router-dom";
+import LoginButton from "./LoginButton";
+import LoginInput from "./LoginInput";
+import Logo from "./Logo";
 
 const isUserNameValid = (userName) => {
   return userName.length > 0 && userName.length < 10 && !userName.includes(" ");
 };
-
-const Logo = () => <p className="logo">GeoCall</p>;
-
-const LoginInput = ({ userName, setUserName }) => {
-  const handleUserInput = (e) => {
-    setUserName(e.target.value);
-  };
-  return (
-    <input
-      type="text"
-      className="l_page_input"
-      value={userName}
-      onChange={handleUserInput}
-    />
-  );
-};
-const LoginButton = ({ onClick, disabled }) => (
-  <button disabled={disabled} onClick={onClick} className="l_page_login_button">
-    Login
-  </button>
-);
 
 const LoginPage = () => {
   const [userName, setUserName] = useState("");
