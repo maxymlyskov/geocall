@@ -1,4 +1,8 @@
 import io from "socket.io-client";
+import {
+  onlineUsersHandler,
+  userDisconnectedHandler,
+} from "../store/actions/usersActions";
 
 let socket = null;
 
@@ -10,7 +14,11 @@ export const connectWithSocketIOServer = () => {
   });
 
   socket.on("online-users", (usersData) => {
-    console.log(usersData);
+    onlineUsersHandler(socket.id, usersData);
+  });
+
+  socket.on("user-disconnected", (disconnectedUserSocketId) => {
+    userDisconnectedHandler(disconnectedUserSocketId);
   });
 };
 

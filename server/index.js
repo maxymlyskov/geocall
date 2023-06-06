@@ -31,6 +31,7 @@ io.on("connection", (socket) => {
 
   socket.on("disconnect", () => {
     disconnectEventHandler(socket.id);
+    broadDisconnectedUserDetails(socket.id);
   });
 });
 
@@ -42,6 +43,9 @@ server.listen(PORT, () => {
 
 const disconnectEventHandler = (id) => {
   console.log("user disconnected with id: " + id);
+  removeOnlineUser(id);
+
+  broadDisconnectedUserDetails(id);
 };
 
 const removeOnlineUser = (id) => {
@@ -50,6 +54,10 @@ const removeOnlineUser = (id) => {
   }
 
   console.log(onlineUsers);
+};
+
+const broadDisconnectedUserDetails = (disconnectedUserSocketId) => {
+  io.to("logged-users").emit("user-disconnected", disconnectedUserSocketId);
 };
 
 const loginEventHandler = (socket, data) => {
