@@ -4,10 +4,12 @@ import { useSelector } from "react-redux";
 
 import "./MapPage.css";
 import Marker from "./Marker";
+import UserInfoCard from "./UserInfoCard/UserInfoCard";
 
 const MapPage = () => {
   const myLocation = useSelector((state) => state.map.myLocation);
   const onlineUsers = useSelector((state) => state.map.onlineUsers);
+  const cardChooseOption = useSelector((state) => state.map.cardChooseOption);
 
   const defaultMapProps = {
     center: {
@@ -35,6 +37,13 @@ const MapPage = () => {
           />
         ))}
       </GoogleMapReact>
+      {cardChooseOption && (
+        <UserInfoCard
+          socketId={cardChooseOption.socketId}
+          username={cardChooseOption.username}
+          userLocation={cardChooseOption.coords}
+        />
+      )}
     </div>
   );
 };
