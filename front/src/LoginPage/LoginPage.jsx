@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { setMyLocation } from "../MapPage/mapSlice";
+import { connectWithSocketIOServer } from "../socketConnection/socketConn";
+import { getRandomCoords } from "./FAKE_LOCATIONS";
 import LoginButton from "./LoginButton";
 import LoginInput from "./LoginInput";
 import Logo from "./Logo";
-import { useDispatch } from "react-redux";
-import { setMyLocation } from "../MapPage/mapSlice";
-import { getRandomCoords } from "./FAKE_LOCATIONS";
 
 const isUserNameValid = (userName) => {
   return userName.length > 0 && userName.length < 10 && !userName.includes(" ");
@@ -21,6 +22,7 @@ const LoginPage = () => {
   const [locationErrorOccured, setLocationErrorOccured] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const myLocation = useSelector((state) => state.map.myLocation);
 
   const onSuccess = (position) => {
     console.log(position);
@@ -45,6 +47,10 @@ const LoginPage = () => {
 
     onSuccess(getRandomCoords());
   }, []);
+
+  useEffect(() => {
+    if (myLocation) connectWithSocketIOServer();
+  }, [myLocation]);
 
   const handleLogin = () => {
     navigate("/map");
