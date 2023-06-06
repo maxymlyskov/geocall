@@ -4,7 +4,7 @@ import LoginPage from "./LoginPage/LoginPage";
 import MapPage from "./MapPage/MapPage";
 
 import "./LoginPage/LoginPage.css";
-import "./MapPage/MapP";
+import "./MapPage/MapPage";
 
 function App() {
   return (
