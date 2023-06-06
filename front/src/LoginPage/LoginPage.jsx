@@ -3,8 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setMyLocation } from "../MapPage/mapSlice";
 import { connectWithSocketIOServer } from "../socketConnection/socketConn";
-import { getRandomCoords } from "./FAKE_LOCATIONS";
 import LoginButton from "./LoginButton";
+import { getFakeLocation } from "./FAKE_LOCATIONS";
+
 import LoginInput from "./LoginInput";
 import Logo from "./Logo";
 import { proceedWithLogin } from "../store/actions/loginPageActions";
@@ -46,7 +47,7 @@ const LoginPage = () => {
     //   locationOptions
     // );
 
-    onSuccess(getRandomCoords());
+    onSuccess(getFakeLocation());
   }, []);
 
   useEffect(() => {

@@ -1,21 +1,54 @@
-// Create an empty array to store the generated coordinates
-const fakeCoords = [];
-
-// Use a for loop to generate a specified number of objects containing latitude and longitude properties
-for (let i = 0; i < 10; i++) {
-  // Create a new object with a coords property that contains an object with latitude and longitude properties
-  const coordsObj = {
+const FAKE_LOCATIONS = [
+  {
     coords: {
-      latitude: Math.random() * (90 - -90) + -90,
-      longitude: Math.random() * (180 - -180) + -180,
+      latitude: 0.76126,
+      longitude: 31.33584,
     },
-  };
-  // Push the newly created object into the array
-  fakeCoords.push(coordsObj);
-}
+  },
+  {
+    coords: {
+      latitude: -27.6068,
+      longitude: 14.55563,
+    },
+  },
+  {
+    coords: {
+      latitude: -33.87379,
+      longitude: 158.13075,
+    },
+  },
+  {
+    coords: {
+      latitude: 39.84008,
+      longitude: 31.73172,
+    },
+  },
+  {
+    coords: {
+      latitude: 46.97472,
+      longitude: 22.39456,
+    },
+  },
+  {
+    coords: {
+      latitude: 10.62231,
+      longitude: 11.17861,
+    },
+  },
+  {
+    coords: {
+      latitude: 47.76853,
+      longitude: -1.97983,
+    },
+  },
+  {
+    coords: {
+      longitude: -122.4194155,
+      latitude: 37.7749295,
+    },
+  },
+];
 
-// Export a function that returns a random coords object from the array
-export function getRandomCoords() {
-  const randomIndex = Math.floor(Math.random() * fakeCoords.length);
-  return fakeCoords[randomIndex];
-}
+export const getFakeLocation = () => {
+  return FAKE_LOCATIONS[Math.floor(Math.random() * FAKE_LOCATIONS.length)];
+};
