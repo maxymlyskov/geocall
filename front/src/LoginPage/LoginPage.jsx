@@ -7,6 +7,7 @@ import { getRandomCoords } from "./FAKE_LOCATIONS";
 import LoginButton from "./LoginButton";
 import LoginInput from "./LoginInput";
 import Logo from "./Logo";
+import { proceedWithLogin } from "../store/actions/loginPageActions";
 
 const isUserNameValid = (userName) => {
   return userName.length > 0 && userName.length < 10 && !userName.includes(" ");
@@ -18,7 +19,7 @@ const locationOptions = {
 };
 
 const LoginPage = () => {
-  const [userName, setUserName] = useState("");
+  const [username, setUserName] = useState("");
   const [locationErrorOccured, setLocationErrorOccured] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -29,7 +30,7 @@ const LoginPage = () => {
     dispatch(
       setMyLocation({
         lat: position.coords.latitude,
-        long: position.coords.longitude,
+        lng: position.coords.longitude,
       })
     );
   };
@@ -53,6 +54,13 @@ const LoginPage = () => {
   }, [myLocation]);
 
   const handleLogin = () => {
+    proceedWithLogin({
+      username,
+      coords: {
+        lng: myLocation.lng,
+        lat: myLocation.lat,
+      },
+    });
     navigate("/map");
   };
 
@@ -60,9 +68,9 @@ const LoginPage = () => {
     <div className="l_page_main_container">
       <div className="l_page_box">
         <Logo />
-        <LoginInput userName={userName} setUserName={setUserName} />
+        <LoginInput userName={username} setUserName={setUserName} />
         <LoginButton
-          disabled={!isUserNameValid(userName) || locationErrorOccured}
+          disabled={!isUserNameValid(username) || locationErrorOccured}
           onClick={handleLogin}
         />
       </div>
