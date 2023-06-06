@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 
 import { calculateDistanceBetweenCoords } from "../../utils/location";
+import ActionButtons from "./ActionButtons";
 
 const Label = ({ fontSize, text }) => {
   return (
@@ -21,7 +22,7 @@ const UserInfoCard = ({ username, userLocation, socketId }) => {
         fontSize="14px"
         text={`${calculateDistanceBetweenCoords(myLocation, userLocation)}km`}
       />
-      {/* <ActionButtons socketId={socketId} username={username} /> */}
+      <ActionButtons socketId={socketId} username={username} />
     </div>
   );
 };
