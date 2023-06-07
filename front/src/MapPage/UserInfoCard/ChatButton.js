@@ -1,17 +1,18 @@
 import React from "react";
 import { useDispatch } from "react-redux";
+import { addChatbox } from "../../Messenger/messengerSlice";
 import chatIcon from "../../resources/images/chat-icon.svg";
 
 const ChatButton = ({ socketId, username }) => {
   const dispatch = useDispatch();
 
   const handleAddChatbox = () => {
-    // dispatch(
-    //   addChatbox({
-    //     username,
-    //     socketId,
-    //   })
-    // );
+    dispatch(
+      addChatbox({
+        username,
+        socketId,
+      })
+    );
   };
 
   return (

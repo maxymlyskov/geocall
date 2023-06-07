@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   myLocation: null,
   onlineUsers: [],
-  cardChooseOption: null,
+  cardChosenOption: null,
 };
 
 export const mapSlice = createSlice({
@@ -22,7 +22,7 @@ export const mapSlice = createSlice({
       );
     },
     setCardChosenOption: (state, action) => {
-      state.cardChooseOption = action.payload;
+      state.cardChosenOption = action.payload;
     },
   },
 });

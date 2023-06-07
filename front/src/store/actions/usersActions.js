@@ -1,11 +1,11 @@
-import { setOnlineUsers, removeDisconnectedUser } from "../../MapPage/mapSlice";
 import store from "../store";
+import { setOnlineUsers, removeDisconnectedUser } from "../../MapPage/mapSlice";
 
 export const onlineUsersHandler = (socketId, usersData) => {
   store.dispatch(
     setOnlineUsers(
       usersData.map((user) => {
-        if (socketId === user.socketId) {
+        if (user.socketId === socketId) {
           user.myself = true;
         }
         return user;

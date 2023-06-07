@@ -2,14 +2,16 @@ import React from "react";
 import GoogleMapReact from "google-map-react";
 import { useSelector } from "react-redux";
 
-import "./MapPage.css";
 import Marker from "./Marker";
 import UserInfoCard from "./UserInfoCard/UserInfoCard";
+import Messenger from "../Messenger/Messenger";
+
+import "./MapPage.css";
 
 const MapPage = () => {
   const myLocation = useSelector((state) => state.map.myLocation);
   const onlineUsers = useSelector((state) => state.map.onlineUsers);
-  const cardChooseOption = useSelector((state) => state.map.cardChooseOption);
+  const cardChosenOption = useSelector((state) => state.map.cardChosenOption);
 
   const defaultMapProps = {
     center: {
@@ -26,22 +28,26 @@ const MapPage = () => {
         defaultCenter={defaultMapProps.center}
         defaultZoom={defaultMapProps.zoom}
       >
-        {onlineUsers.map((user) => (
-          <Marker
-            lat={user.coords.lat}
-            lng={user.coords.lng}
-            key={user.socketId}
-            myself={user.myself}
-            username={user.username}
-            coords={user.coords}
-          />
-        ))}
+        {onlineUsers.map((onlineUser) => {
+          return (
+            <Marker
+              lat={onlineUser.coords.lat}
+              lng={onlineUser.coords.lng}
+              key={onlineUser.socketId}
+              myself={onlineUser.myself}
+              socketId={onlineUser.socketId}
+              username={onlineUser.username}
+              coords={onlineUser.coords}
+            />
+          );
+        })}
       </GoogleMapReact>
-      {cardChooseOption && (
+      <Messenger />
+      {cardChosenOption && (
         <UserInfoCard
-          socketId={cardChooseOption.socketId}
-          username={cardChooseOption.username}
-          userLocation={cardChooseOption.coords}
+          socketId={cardChosenOption.socketId}
+          username={cardChosenOption.username}
+          userLocation={cardChosenOption.coords}
         />
       )}
     </div>

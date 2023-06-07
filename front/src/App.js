@@ -3,20 +3,15 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LoginPage from "./LoginPage/LoginPage";
 import MapPage from "./MapPage/MapPage";
 
-import "./LoginPage/LoginPage.css";
-import "./MapPage/MapPage";
-
-function App() {
+const App = () => {
   return (
     <Router>
       <Routes>
-        <Route>
-          <Route path="/" element={<LoginPage />} />
-          <Route path="/map" element={<MapPage />} />
-        </Route>
+        <Route path="/" element={<LoginPage />} />
+        <Route path="/map" element={<MapPage />} />
       </Routes>
     </Router>
   );
-}
+};
 
 export default App;

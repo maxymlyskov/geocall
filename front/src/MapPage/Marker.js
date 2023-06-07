@@ -1,9 +1,10 @@
 import React from "react";
-import locationIcon from "../resources/images/location-icon.svg";
 import { useDispatch } from "react-redux";
+import locationIcon from "../resources/images/location-icon.svg";
 import { setCardChosenOption } from "./mapSlice";
 
-const Marker = ({ myself, socketId, username, coords }) => {
+const Marker = (props) => {
+  const { myself, socketId, username, coords } = props;
   const dispatch = useDispatch();
 
   const handleOptionChoose = () => {
@@ -17,6 +18,7 @@ const Marker = ({ myself, socketId, username, coords }) => {
       );
     }
   };
+
   return (
     <div className="map_page_marker_container" onClick={handleOptionChoose}>
       <img src={locationIcon} alt={username} className="map_page_marker_img" />

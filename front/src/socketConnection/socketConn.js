@@ -1,4 +1,5 @@
 import io from "socket.io-client";
+import { chatMessageHandler } from "../store/actions/messengerActions";
 import {
   onlineUsersHandler,
   userDisconnectedHandler,
@@ -10,11 +11,15 @@ export const connectWithSocketIOServer = () => {
   socket = io("http://localhost:3003");
 
   socket.on("connect", () => {
-    console.log("socket connected to the server");
+    console.log("connected to socket server");
   });
 
   socket.on("online-users", (usersData) => {
     onlineUsersHandler(socket.id, usersData);
+  });
+
+  socket.on("chat-message", (messageData) => {
+    chatMessageHandler(messageData);
   });
 
   socket.on("user-disconnected", (disconnectedUserSocketId) => {
@@ -24,4 +29,8 @@ export const connectWithSocketIOServer = () => {
 
 export const login = (data) => {
   socket.emit("user-login", data);
+};
+
+export const sendChatMessage = (data) => {
+  socket.emit("chat-message", data);
 };
