@@ -7,6 +7,7 @@ import UserInfoCard from "./UserInfoCard/UserInfoCard";
 import Messenger from "../Messenger/Messenger";
 
 import "./MapPage.css";
+import VideoRooms from "../VideoRooms/VideoRooms";
 
 const MapPage = () => {
   const myLocation = useSelector((state) => state.map.myLocation);
@@ -50,6 +51,7 @@ const MapPage = () => {
           userLocation={cardChosenOption.coords}
         />
       )}
+      <VideoRooms />
     </div>
   );
 };
