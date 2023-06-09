@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { setMyLocation } from "../MapPage/mapSlice";
+import { getFakeLocation } from "./FAKE_LOCATION";
 import { connectWithSocketIOServer } from "../socketConnection/socketConn";
 import { proceedWithLogin } from "../store/actions/loginPageActions";
-import { getFakeLocation } from "./FAKE_LOCATION";
 
 import LoginButton from "./LoginButton";
 import LoginInput from "./LoginInput";
 import Logo from "./Logo";
 
-import { connectWithPeerServer } from "../realtimeCommunication/webRTCHandler";
 import "./LoginPage.css";
+import { connectWithPeerServer } from "../realtimeCommunication/webRTCHandler";
 
 const isUsernameValid = (username) => {
   return username.length > 0 && username.length < 10 && !username.includes(" ");

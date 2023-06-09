@@ -1,13 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import mapReducer from "../MapPage/mapSlice";
 import messengerReducer from "../Messenger/messengerSlice";
-import videoRoomsSlice from "../realtimeCommunication/videoRoomsSlice";
+import videoRoomsReducer from "../realtimeCommunication/videoRoomsSlice";
 
 const store = configureStore({
   reducer: {
     map: mapReducer,
     messenger: messengerReducer,
-    videoRooms: videoRoomsSlice,
+    videoRooms: videoRoomsReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
@@ -16,7 +16,7 @@ const store = configureStore({
           "videoRooms/setLocalStream",
           "videoRooms/setRemoteStream",
         ],
-        ignorePaths: ["videoRooms.localStream", "videoRooms.remoteStream"],
+        ignoredPaths: ["videoRooms.localStream", "videoRooms.remoteStream"],
       },
     }),
 });

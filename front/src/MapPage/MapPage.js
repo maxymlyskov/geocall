@@ -5,9 +5,9 @@ import { useSelector } from "react-redux";
 import Marker from "./Marker";
 import UserInfoCard from "./UserInfoCard/UserInfoCard";
 import Messenger from "../Messenger/Messenger";
+import VideoRooms from "../VideoRooms/VideoRooms";
 
 import "./MapPage.css";
-import VideoRooms from "../VideoRooms/VideoRooms";
 
 const MapPage = () => {
   const myLocation = useSelector((state) => state.map.myLocation);

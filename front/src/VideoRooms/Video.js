@@ -1,12 +1,12 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef, useEffect } from "react";
 
 const Video = ({ stream, muted }) => {
   const videoEl = useRef();
 
   useEffect(() => {
     const video = videoEl.current;
-
     video.srcObject = stream;
+
     video.onloadedmetadata = () => {
       video.play();
     };

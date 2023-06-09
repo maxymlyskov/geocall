@@ -1,10 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
-import App from "./App";
-import "./MapPage/MapPage.css";
-import "./index.css";
 import store from "./store/store";
+import App from "./App";
+import "./index.css";
 
 // const container = document.getElementById("root");
 // const root = createRoot(container);

@@ -2,8 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import CreateRoomButton from "./CreateRoomButton";
 import RoomJoinButton from "./RoomJoinButton";
-
-import "../MapPage/MapPage.css";
+import ParticipantsVideos from "./ParticipantsVideos";
 
 const DUMMY_ROOMS = [
   {
@@ -28,26 +27,27 @@ const DUMMY_ROOMS = [
   },
 ];
 
-const RoomsList = () => {
-  const videoRooms = useSelector((state) => state.videoRooms.rooms);
-  const converRoomsToArray = () => {
-    const rooms = [];
+const convertRoomsToArray = (videoRooms) => {
+  const rooms = [];
 
-    Object.entries(videoRooms).forEach(([key, value]) => {
-      rooms.push({
-        id: key,
-        creatorUsername: value.participants[0].username,
-        amountOfParicipants: value.participants.length,
-      });
+  Object.entries(videoRooms).forEach(([key, value]) => {
+    rooms.push({
+      id: key,
+      creatorUsername: value.participants[0].username,
+      amountOfParicipants: value.participants.length,
     });
+  });
 
-    return rooms;
-  };
+  return rooms;
+};
+
+const RoomsList = () => {
+  const rooms = useSelector((store) => store.videoRooms.rooms);
 
   return (
     <div className="map_page_v_rooms_list">
       <CreateRoomButton />
-      {converRoomsToArray().map((room) => (
+      {convertRoomsToArray(rooms).map((room) => (
         <RoomJoinButton
           key={room.id}
           creatorUsername={room.creatorUsername}
@@ -59,4 +59,13 @@ const RoomsList = () => {
   );
 };
 
-export default RoomsList;
+const VideoRooms = () => {
+  return (
+    <>
+      <RoomsList />
+      <ParticipantsVideos />
+    </>
+  );
+};
+
+export default VideoRooms;
