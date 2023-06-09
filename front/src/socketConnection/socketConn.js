@@ -4,6 +4,7 @@ import {
   onlineUsersHandler,
   userDisconnectedHandler,
 } from "../store/actions/usersActions";
+import { videoRoomsListHandler } from "../store/actions/videoRoomAction";
 
 let socket = null;
 
@@ -22,9 +23,7 @@ export const connectWithSocketIOServer = () => {
     chatMessageHandler(messageData);
   });
 
-  socket.on("video-rooms", (videoRooms) =>
-    console.log("new list of rooms received")
-  );
+  socket.on("video-rooms", (videoRooms) => videoRoomsListHandler(videoRooms));
 
   socket.on("user-disconnected", (disconnectedUserSocketId) => {
     userDisconnectedHandler(disconnectedUserSocketId);

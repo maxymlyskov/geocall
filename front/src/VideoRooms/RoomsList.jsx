@@ -30,6 +30,8 @@ const DUMMY_ROOMS = [
 
 const RoomsList = () => {
   const rooms = useSelector((state) => state.videoRooms.rooms);
+
+  console.log(rooms);
   return (
     <div className="map_page_v_rooms_list">
       <CreateRoomButton />

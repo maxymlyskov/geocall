@@ -1,5 +1,8 @@
 import { v4 as uuid } from "uuid";
-import { setInRoom } from "../../realtimeCommunication/videoRoomsSlice";
+import {
+  setInRoom,
+  setRooms,
+} from "../../realtimeCommunication/videoRoomsSlice";
 import * as socketConn from "../../socketConnection/socketConn";
 import store from "../store";
 
@@ -12,4 +15,8 @@ export const createVideoRoom = async () => {
     peerId: 1,
     newRoomId,
   });
+};
+
+export const videoRoomsListHandler = (videoRooms) => {
+  store.dispatch(setRooms(videoRooms));
 };
