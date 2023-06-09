@@ -25,6 +25,17 @@ export const createVideoRoom = async () => {
   });
 };
 
+export const joinVideoRoom = async (roomId) => {
+  const success = await getAccessToLocalStream();
+  if (!success) return;
+  store.dispatch(setInRoom(roomId));
+
+  socketConn.joinVideoRoom({
+    roomId,
+    peerId: getPeerId(),
+  });
+};
+
 export const videoRoomsListHandler = (videoRooms) => {
   store.dispatch(setRooms(videoRooms));
 };
