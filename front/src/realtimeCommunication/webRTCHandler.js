@@ -25,9 +25,12 @@ export const getAccessToLocalStream = async () => {
 
 export const connectWithPeerServer = () => {
   peer = new Peer(undefined, {
-    host: "localhost",
-    port: 9000,
-    path: "/peer",
+    host: "react-geocall-app-server.onrender.com",
+    port: 443,
+    path: "peer",
+  });
+  peer.on("error", (err) => {
+    console.log("peer server connection error", err);
   });
 
   peer.on("open", (id) => {
@@ -41,7 +44,6 @@ export const connectWithPeerServer = () => {
     call.answer(localStream); // Answer the call with A/V stream
 
     call.on("stream", (remoteStream) => {
-      console.log("remote stream came");
       store.dispatch(setRemoteStream(remoteStream));
     });
   });
@@ -55,7 +57,6 @@ export const call = (data) => {
   const peerCall = peer.call(newParticipantPeerId, localStream);
 
   peerCall.on("stream", (remoteStream) => {
-    console.log("remote stream came");
     store.dispatch(setRemoteStream(remoteStream));
   });
 };
@@ -65,7 +66,6 @@ export const disconnect = () => {
 
   for (let conns in peer.connections) {
     peer.connections[conns].forEach((c) => {
-      console.log("closing connections");
       c.peerConnection.close();
 
       if (c.close) c.close();

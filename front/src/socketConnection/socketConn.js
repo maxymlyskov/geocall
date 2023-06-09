@@ -10,12 +10,14 @@ import { call, disconnect } from "../realtimeCommunication/webRTCHandler";
 let socket = null;
 
 export const connectWithSocketIOServer = () => {
-  socket = io("http://localhost:3003");
+  socket = io("https://react-geocall-app-server.onrender.com");
 
   socket.on("connect", () => {
     console.log("connected to socket server");
   });
-
+  socket.on("connect_error", (err) => {
+    console.log(`connect_error due to ${err.message}`);
+  });
   socket.on("online-users", (usersData) => {
     onlineUsersHandler(socket.id, usersData);
   });
@@ -50,13 +52,10 @@ export const sendChatMessage = (data) => {
 };
 
 export const createVideoRoom = (data) => {
-  console.log("emitting");
   socket.emit("video-room-create", data);
 };
 
 export const joinVideoRoom = (data) => {
-  console.log("emitting event to join a room");
-  console.log(data);
   socket.emit("video-room-join", data);
 };
 

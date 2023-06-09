@@ -3,7 +3,7 @@ const app = express();
 const http = require("http");
 const cors = require("cors");
 const { Server } = require("socket.io");
-const { PeerServer } = require("peer");
+const { ExpressPeerServer } = require("peer");
 
 const server = http.createServer(app);
 
@@ -24,7 +24,6 @@ let onlineUsers = {};
 let videoRooms = {};
 
 io.on("connection", (socket) => {
-  console.log(`user connected of the id: ${socket.id}`);
   socket.on("user-login", (data) => loginEventHandler(socket, data));
 
   socket.on("chat-message", (data) => chatMessageHandler(socket, data));
@@ -46,10 +45,11 @@ io.on("connection", (socket) => {
   });
 });
 
-const peerServer = PeerServer({ port: 9000, path: "/peer" });
+const peerServer = ExpressPeerServer(server, { path: "/peer" });
 
 const PORT = process.env.PORT || 3003;
 
+app.use(peerServer);
 server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
@@ -62,14 +62,12 @@ const loginEventHandler = (socket, data) => {
     username: data.username,
     coords: data.coords,
   };
-  console.log(onlineUsers);
 
   io.to("logged-users").emit("online-users", convertOnlineUsersToArray());
   broadcastVideoRooms();
 };
 
 const disconnectEventHandler = (socket) => {
-  console.log(`user disconnected of the id: ${socket.id}`);
   checkIfUserIsInCall(socket);
   removeOnlineUser(socket.id);
   broadcastDisconnectedUserDetails(socket.id);
@@ -79,9 +77,6 @@ const chatMessageHandler = (socket, data) => {
   const { receiverSocketId, content, id } = data;
 
   if (onlineUsers[receiverSocketId]) {
-    console.log("message received");
-    console.log("sending message to other user");
-
     io.to(receiverSocketId).emit("chat-message", {
       senderSocketId: socket.id,
       content,
@@ -105,8 +100,6 @@ const videoRoomCreateHandler = (socket, data) => {
   };
 
   broadcastVideoRooms();
-
-  console.log("new room", data);
 };
 
 const videoRoomJoinHandler = (socket, data) => {
@@ -160,7 +153,6 @@ const removeOnlineUser = (id) => {
   if (onlineUsers[id]) {
     delete onlineUsers[id];
   }
-  console.log(onlineUsers);
 };
 
 const checkIfUserIsInCall = (socket) => {
