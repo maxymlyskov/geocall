@@ -3,6 +3,7 @@ const app = express();
 const http = require("http");
 const cors = require("cors");
 const { Server } = require("socket.io");
+const { PeerServer } = require("peer");
 
 const server = http.createServer(app);
 
@@ -37,6 +38,7 @@ io.on("connection", (socket) => {
   });
 });
 
+const peerServer = PeerServer({ port: 9000, path: "/peer" });
 const PORT = process.env.PORT || 3003;
 
 server.listen(PORT, () => {

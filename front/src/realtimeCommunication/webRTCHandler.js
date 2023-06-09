@@ -5,6 +5,10 @@ import { Peer } from "peerjs";
 let peer;
 let peerId;
 
+export const getPeerId = () => {
+  return peerId;
+};
+
 export const getAccessToLocalStream = async () => {
   const localStream = await navigator.mediaDevices.getUserMedia({
     video: true,
