@@ -34,3 +34,7 @@ export const login = (data) => {
 export const sendChatMessage = (data) => {
   socket.emit("chat-message", data);
 };
+
+export const createVideoRoom = (data) => {
+  socket.emit("video-room-create", data);
+};
