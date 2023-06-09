@@ -1,6 +1,6 @@
-import store from "../store/store";
-import { setLocalStream } from "./videoRoomsSlice";
 import { Peer } from "peerjs";
+import store from "../store/store";
+import { setLocalStream, setRemoteStream } from "./videoRoomsSlice";
 
 let peer;
 let peerId;
@@ -32,5 +32,27 @@ export const connectWithPeerServer = () => {
   peer.on("open", (id) => {
     console.log("My peer id is: " + id);
     peerId = id;
+  });
+
+  peer.on("call", async (call) => {
+    const localStream = store.getState().videoRooms.localStream;
+
+    call.answer(localStream);
+    call.on("stream", (remoteStream) => {
+      console.log("remote stream came");
+      store.dispatch(setRemoteStream(remoteStream));
+    });
+  });
+};
+
+export const call = (data) => {
+  const { newParticipantPeerId } = data;
+  const localStream = store.getState().videoRooms.localStream;
+
+  const peerCall = peer.call(newParticipantPeerId, localStream);
+
+  peerCall.on("stream", (remoteStream) => {
+    console.log("remote stream came");
+    store.dispatch(setRemoteStream(remoteStream));
   });
 };
