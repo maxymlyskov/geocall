@@ -9,6 +9,16 @@ const store = configureStore({
     messenger: messengerReducer,
     videoRooms: videoRoomsSlice,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoreActions: [
+          "videoRooms/setLocalStream",
+          "videoRooms/setRemoteStream",
+        ],
+        ignorePaths: ["videoRooms.localStream", "videoRooms.remoteStream"],
+      },
+    }),
 });
 
 export default store;

@@ -5,8 +5,13 @@ import {
 } from "../../realtimeCommunication/videoRoomsSlice";
 import * as socketConn from "../../socketConnection/socketConn";
 import store from "../store";
+import { getAccessToLocalStream } from "../../realtimeCommunication/webRTCHandler";
 
 export const createVideoRoom = async () => {
+  const success = await getAccessToLocalStream();
+
+  if (!success) return;
+
   const newRoomId = uuid();
 
   store.dispatch(setInRoom(newRoomId));
