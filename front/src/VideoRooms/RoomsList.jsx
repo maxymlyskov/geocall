@@ -29,18 +29,30 @@ const DUMMY_ROOMS = [
 ];
 
 const RoomsList = () => {
-  const rooms = useSelector((state) => state.videoRooms.rooms);
+  const videoRooms = useSelector((state) => state.videoRooms.rooms);
+  const converRoomsToArray = () => {
+    const rooms = [];
 
-  console.log(rooms);
+    Object.entries(videoRooms).forEach(([key, value]) => {
+      rooms.push({
+        id: key,
+        creatorUsername: value.participants[0].username,
+        amountOfParicipants: value.participants.length,
+      });
+    });
+
+    return rooms;
+  };
+
   return (
     <div className="map_page_v_rooms_list">
       <CreateRoomButton />
-      {DUMMY_ROOMS.map((room) => (
+      {converRoomsToArray().map((room) => (
         <RoomJoinButton
           key={room.id}
-          creatorUsername={room.participants[0].username}
+          creatorUsername={room.creatorUsername}
           roomId={room.id}
-          amountOfParicipants={room.participants.length}
+          amountOfParicipants={room.amountOfParicipants}
         />
       ))}
     </div>
