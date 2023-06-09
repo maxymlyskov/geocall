@@ -10,5 +10,6 @@ export const createVideoRoom = async () => {
 
   socketConn.createVideoRoom({
     peerId: 1,
+    newRoomId,
   });
 };

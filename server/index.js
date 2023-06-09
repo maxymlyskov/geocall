@@ -20,6 +20,7 @@ app.get("/", (req, res) => {
 });
 
 let onlineUsers = {};
+let videoRooms = {};
 
 io.on("connection", (socket) => {
   console.log(`user connected of the id: ${socket.id}`);
@@ -102,5 +103,22 @@ const convertOnlineUsersToArray = () => {
 };
 
 const videoRoomCreateHandler = (socket, data) => {
+  const { peerId, newRoomId } = data;
+
+  videoRooms[newRoomId] = {
+    participants: [
+      {
+        socketId: socket.id,
+        username: onlineUsers[socket.id].username,
+        peerId,
+      },
+    ],
+  };
+
+  broadcastVideoRooms();
   console.log("new room ", data);
+};
+
+const broadcastVideoRooms = () => {
+  io.emit("video-rooms", videoRooms);
 };
